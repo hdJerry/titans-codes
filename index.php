@@ -7,6 +7,25 @@ body{
   padding: 0;
 }
 
+.breakdown{
+  position: absolute;
+  top: 15%;
+  right: 30px;
+  background: black;
+  color: #fff;
+  padding: 10px;
+  border-radius:20px 6px 20px 6px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation-name: magicslide;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+
 .titans{
   left: 0;
   right: 0;
@@ -50,10 +69,58 @@ body{
 
 .container{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
   min-height: 100vh;
   margin-top: 60px;
+}
+
+.bar-div{
+  width: 200px;
+  height: 250px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
+  border-left: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  margin-right: 20px;
+  margin-top: 100px;
+}
+
+.bar-pass, .bar-fail{
+  position: absolute;
+  bottom: 0;
+  width: 30px;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar-div p{
+  transform: rotate(30deg);
+}
+
+
+.bar-pass{
+  background: green;
+  left: 50px;
+  opacity: 0;
+  animation-name: magicht;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+.bar-fail{
+  background: red;
+  left: 100px;
+  opacity: 0;
+  animation-name: magicht;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
 }
 
 tr.divider td{
@@ -75,13 +142,13 @@ table{
   border-radius:6px;
   display: relative;
   background-color: #eee;
-
+  width: 80vw;
   padding: 10px;
 }
 tr.whoiam td{
   /* transition: all 0.3s 0.5s; */
-  border-bottom: 6px solid #ddd;
-  border-left: 6px solid #ddd;
+  /* border-bottom: 6px solid #ddd;
+  border-left: 6px solid #ddd; */
 }
 tr td{
   border-radius:20px 6px 20px 6px;
@@ -148,6 +215,19 @@ tr.whoiam td:hover{
   50%{ opacity: 1; transform: scale(1.005);}
   100%{ opacity: 1; transform: scale(1);}
 }
+
+@keyframes  magicht {
+  0%{ opacity: 0; height: 0;}
+  50%{ opacity: 1; height: 10px;}
+  100%{ opacity: 1;}
+}
+
+
+@keyframes  magicslide {
+  0%{ opacity: 0; transform: translateX(30px);}
+  50%{ opacity: 1;transform: translateX(10px);}
+  100%{ opacity: 1; transform: translateX(0);}
+}
 </style>
 
 
@@ -161,12 +241,18 @@ tr.whoiam td:hover{
 
   $titans = array();
 
+
+  $pass = 0;
+  $failed = 0;
+
+
   $error = "Query is not valid";
   $error_num = "404";
 
   echo "<div class='titans'> <p>Team<span>-</span>Titans</p> </div>";
 
   echo "<div class='container'>";
+
 
   echo '<table class="main">';
     echo '<tr> <th>#</th> <th>Full Name</th> <th>Infomation</th> <th>Status</th> </tr>';
@@ -206,10 +292,11 @@ tr.whoiam td:hover{
 
     $status = "failed";
 
+
+
     $words = array("Hello World", "this is", "with HNGi7 ID", "and email", "using", "for stage 2 task");
 
     $x = 0;
-
     while ($x <= count($words)-1) {
       if(strpos(strtolower($output), strtolower($words[$x])) !== false){
         $status = "pass";
@@ -219,6 +306,15 @@ tr.whoiam td:hover{
       }
       $x++;
     }
+
+    if($status === "pass"){
+      // array_push($pass,"okay");
+      $pass++;
+    }else{
+      // array_push($failed,"failed");
+      $failed++;
+    }
+
 
 
 
@@ -238,7 +334,7 @@ tr.whoiam td:hover{
   // print_r($newout);
 
   $num = $index - 1;
-  $anim = $num/($filesLength-4).s;
+  $anim = $num/(7).s;
 
     if($queries === "" || $queries === "html"){
       echo "<tr class='whoiam  $status' style='animation-delay: $anim'>";
@@ -254,8 +350,32 @@ tr.whoiam td:hover{
 
   }
 
+  // print_r($pass);
+  // print_r($pass);
+  $numfiles = $filesLength - 2;
+
+  $failpercentage = (($failed/$numfiles) * 100).'%';
+  $passpercentage = (($pass/$numfiles) * 100).'%';
+
 
   echo '</table>';
+
+
+    echo "<div class='bar-div'>";
+        echo "<div class='bar-pass' style='height: $passpercentage'>";
+           echo "<p>";
+             echo $passpercentage;
+           echo "</p>";
+        echo "</div>";
+        echo "<div class='bar-fail' style='height: $failpercentage'>";
+            echo "<p>";
+             echo $failpercentage;
+           echo "</p>";
+        echo "</div>";
+    echo "</div>";
+    echo "<p class='breakdown'>";
+      echo "Total ".$numfiles;
+    echo "</p>";
   echo "</div>";
 
 
@@ -294,3 +414,4 @@ tr.whoiam td:hover{
  // }
 
  </script>
+
