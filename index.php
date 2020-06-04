@@ -368,8 +368,8 @@ tr.whoiam td:hover{
   // print_r($pass);
   $numfiles = $filesLength - 2;
 
-  $failpercentage = round(($failed/$numfiles) * 100).'%';
-  $passpercentage = round(($pass/$numfiles) * 100).'%';
+  $failpercentage = round((($failed/$numfiles) * 100),2).'%';
+  $passpercentage = round((($pass/$numfiles) * 100),2).'%';
   if($queries !== "json" || $queries === "html"){
 
   echo '</table>';
