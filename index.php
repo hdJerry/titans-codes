@@ -7,10 +7,13 @@ body{
   padding: 0;
 }
 
+.chart{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .breakdown{
-  position: absolute;
-  top: 15%;
-  right: 30px;
   background: black;
   color: #fff;
   padding: 10px;
@@ -84,7 +87,7 @@ body{
   border-left: 2px solid #ccc;
   border-bottom: 2px solid #ccc;
   margin-right: 20px;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .bar-pass, .bar-fail{
@@ -241,6 +244,8 @@ tr.whoiam td:hover{
 
   $titans = array();
 
+    $queries = $_SERVER['QUERY_STRING'];
+
 
   $pass = 0;
   $failed = 0;
@@ -248,6 +253,7 @@ tr.whoiam td:hover{
 
   $error = "Query is not valid";
   $error_num = "404";
+  if($queries === "" || $queries === "html"){
 
   echo "<div class='titans'> <p>Team<span>-</span>Titans</p> </div>";
 
@@ -256,10 +262,13 @@ tr.whoiam td:hover{
 
   echo '<table class="main">';
     echo '<tr> <th>#</th> <th>Full Name</th> <th>Infomation</th> <th>Status</th> </tr>';
-
+}
   while($index < $filesLength){
 
+
+if($queries === "" || $queries === "html"){
     echo "<tr class='divider'><td></td><td></td><td></td><td></td></tr>";
+  }
 
     $array = explode('.', $dir.$files[$index]);
     $extension = end($array);
@@ -330,7 +339,7 @@ tr.whoiam td:hover{
     );
     array_push($titans, $jsonForm);
 
-    $queries = $_SERVER['QUERY_STRING'];
+
   // print_r($newout);
 
   $num = $index - 1;
@@ -356,11 +365,14 @@ tr.whoiam td:hover{
 
   $failpercentage = (($failed/$numfiles) * 100).'%';
   $passpercentage = (($pass/$numfiles) * 100).'%';
-
+if($queries === "" || $queries === "html"){
 
   echo '</table>';
 
-
+  echo "<div class='chart'>";
+      echo "<p class='breakdown'>";
+        echo "Total ".$numfiles;
+      echo "</p>";
     echo "<div class='bar-div'>";
         echo "<div class='bar-pass' style='height: $passpercentage'>";
            echo "<p>";
@@ -373,12 +385,11 @@ tr.whoiam td:hover{
            echo "</p>";
         echo "</div>";
     echo "</div>";
-    echo "<p class='breakdown'>";
-      echo "Total ".$numfiles;
-    echo "</p>";
+
+    echo "</div>";
   echo "</div>";
 
-
+}
   // function findOut(){
   //
   // }
