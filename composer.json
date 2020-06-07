@@ -1,21 +1,22 @@
 {
-    "name":"Titans",
-    "description":"Titans requirements",
-    "repositories":[
+    "name": "paybook/sync-php",
+    "description": "A package to Test certain strings",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
         {
-            "type":"package",
-            "package":{
-                "name":"Titans",
-                "version":"master",
-                "source":{
-                    "url":"git://github.com/hdjerry/titans-codes.git",
-                    "type":"git",
-                    "reference":"master"
-                }
-            }
+            "name": "Jerry Hogan",
+            "email": "damilolajerryhd@gmail.com"
         }
-        
-    ]
-  
-  
-  }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "rmccue/requests": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "hdjerry\\titans-code\\"
+        }
+    }
+}
